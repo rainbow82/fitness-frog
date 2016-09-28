@@ -58,6 +58,7 @@ namespace Treehouse.FitnessFrog.Controllers
                 _entriesRepository.AddEntry(entry);
 
                 //display the entries list page
+                return RedirectToAction("Index");
             }
            return View(entry);
         }
