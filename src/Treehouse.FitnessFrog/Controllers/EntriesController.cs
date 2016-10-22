@@ -12,6 +12,7 @@ namespace Treehouse.FitnessFrog.Controllers
     public class EntriesController : Controller
     {
         private EntriesRepository _entriesRepository = null;
+        private object entry;
 
         public EntriesController()
         {
@@ -112,7 +113,19 @@ namespace Treehouse.FitnessFrog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View();
+            Entry entries = _entriesRepository.GetEntry((int)id);
+
+            if (entry == null) {
+                return HttpNotFound();
+            }
+            return View(entry);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            _entriesRepository.DeleteEntry(id);
+            return RedirectToAction("Index");
         }
 
         private void ValidateEntry(Entry entry)
